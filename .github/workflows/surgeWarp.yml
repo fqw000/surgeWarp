@@ -1,0 +1,33 @@
+name: Run script every hour
+
+on:
+  schedule:
+    - cron:  '0 * * * *'
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Run script
+      run: |
+        # 下载文件
+        curl -o downloaded_file https://subs.zeabur.app/surge
+
+        # 提取 [Proxy] 和 [WireGuard] 字段
+        awk 'BEGIN{RS=""; ORS="\n\n"} /^\[Proxy\]/ || /^\[WireGuard/' downloaded_file > extracted_content
+
+        # 在提取的内容中删除包含 “[Proxy]” 的行
+        sed -i '/\[Proxy\]/d' extracted_content
+
+        # 在提取的内容后追加一行，写入字符串：[Proxy Group]
+        echo -e "\n[Proxy Group]" >> extracted_content
+
+        # 读取 b.conf 文件的内容，然后将其中的 [Proxy Group] 替换为步骤1修改后的内容
+        sed '/\[Proxy Group\]/r extracted_content' b.conf | sed '/\[Proxy Group\]/d' > c.conf
+
+        # 删除临时文件
+        rm downloaded_file extracted_content
