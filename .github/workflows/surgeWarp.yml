@@ -43,3 +43,10 @@ jobs:
         else
           echo "surgeWarp.conf was created successfully"
         fi
+        - name: Commit changes
+      run: |
+        git config --local user.email "wang_zi_mo@163.com"
+        git config --local user.name "fqw000"
+        git add surgeWarp.conf
+        git commit -m "Add surgeWarp.conf"
+        git push
