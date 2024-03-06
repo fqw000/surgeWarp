@@ -48,8 +48,7 @@ jobs:
       run: |
         git config --local user.email "wang_zi_mo@163.com"
         git config --local user.name "fqw000"
+        git config --local http.extraheader "AUTHORIZATION: bearer ${{ secrets.GITHUB_TOKEN }}"
         git add surgeWarp.conf
         git commit -m "Add surgeWarp.conf"
         git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
