@@ -26,13 +26,13 @@ jobs:
         # 在提取的内容后追加一行，写入字符串：[Proxy Group]
         echo -e "\n[Proxy Group]" >> extracted_content || echo "Failed to append [Proxy Group]"
 
-        # 检查 b.conf 文件是否存在
-        if [ ! -f b.conf ]; then
-          echo "b.conf does not exist"
+        # 检查 extracted.conf 文件是否存在
+        if [ ! -f extracted.conf ]; then
+          echo "extracted.conf does not exist"
         fi
 
-        # 读取 b.conf 文件的内容，然后将其中的 [Proxy Group] 替换为步骤1修改后的内容
-        sed '/\[Proxy Group\]/r extracted_content' b.conf | sed '/\[Proxy Group\]/d' > surgeWarp.conf || echo "Failed to create surgeWarp.conf"
+        # 读取 extracted.conf 文件的内容，然后将其中的 [Proxy Group] 替换为步骤1修改后的内容
+        sed '/\[Proxy Group\]/r extracted_content' extracted.conf | sed '/\[Proxy Group\]/d' > surgeWarp.conf || echo "Failed to create surgeWarp.conf"
 
         # 删除临时文件
         rm downloaded_file extracted_content || echo "Failed to delete temporary files"
