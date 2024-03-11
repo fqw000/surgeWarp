@@ -32,8 +32,7 @@ jobs:
         fi
 
         # 读取 extracted.conf 文件的内容，然后将extracted_content插入到extracted.conf中的[Proxy]后面
-        # sed '/\[Proxy\]/r extracted_content' extracted.conf  > surgeWarp.conf || echo "Failed to create surgeWarp.conf"
-        sed '/#!include yifen.conf/r extracted_content' extracted.conf  > surgeWarp.conf || echo "Failed to create surgeWarp.conf"
+        sed '/\[Proxy\]/r extracted_content' extracted.conf  > surgeWarp.conf || echo "Failed to create surgeWarp.conf"
         
         # 删除临时文件
         rm downloaded_file extracted_content || echo "Failed to delete temporary files"
