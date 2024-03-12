@@ -3,6 +3,10 @@ name: surgeWarp
 on:
   schedule:
     - cron:  '0 * * * *'
+  push:
+    branches: [ main ]
+    path:
+      - "extracted.conf"
   workflow_dispatch:
 jobs:
   run-script:
